@@ -12,7 +12,7 @@ func TestServer(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 http.HandleFunc("/", TestServer)
-    err := http.ListenAndServeTLS(":443", "prod.local.pem", "prod.local-key.pem", nil)
+    err := http.ListenAndServeTLS(":443", "/tmp/dev.localhost.com.pem", "/tmp/dev.localhost.com-key.pem", nil)
     if err != nil {
         log.Fatal("ListenAndServe: ", err)
     }

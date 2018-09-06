@@ -5,12 +5,6 @@ RUN cd /go && \
     cd src/github.com/FiloSottile/mkcert && \
     go build -o /bin/mkcert
 
-ADD . /go
+WORKDIR /root/.local/share/mkcert
 
-EXPOSE 443
-
-WORKDIR /go
-
-RUN mkcert -install && cp -rvf /go/ssl/*.pem /root/.local/share/mkcert/
-
-CMD mkcert prod.local && go run dev.go
+CMD mkcert -install && mkcert $domain && tail -f -n0 /etc/hosts
