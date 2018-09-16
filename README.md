@@ -30,6 +30,14 @@ docker run -d -e domain=dev.localhost.com --name mkcert --network mkcert -v mkce
 
 ```
 
+#### For multiple domains, specify it as an environment variable like below:
+
+```
+
+docker run -d -e domain=api.staging.com,dev.localhost.com --name mkcert --network mkcert -v mkcert-data:/root/.local/share/mkcert vishnunair/docker-mkcert
+
+```
+
 #### Connecting mkcert container with your local development environment.
 
 Once you run the mkcert up & running, connect your development environment to the mkcert network and share the volume you create & mount it to /tmp because in dev.go file you need to specify where to look for the ssl certs.
