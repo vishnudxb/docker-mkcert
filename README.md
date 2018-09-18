@@ -4,16 +4,7 @@ Instead of installing mkcert package on my local machine, I prefer to use mkcert
 
 A docker container running mkcert to have your own valid ssl certificates for your local development container based environment.
 
-First you create a docker network which can be used to link mkcert container to your local development container.
-
-
-```
-
-docker network create mkcert
-
-```
-
-Create a shared volume between your mkcert & your local container
+#### Create a shared volume between your mkcert & your local container
 
 ```
 
@@ -22,11 +13,11 @@ docker volume create --name mkcert-data
 ```
 
 
-Now run mkcert container with your local domain name. For eg: dev.localhost.com
+#### Now run mkcert container with your local domain name. For eg: dev.localhost.com
 
 ```
 
-docker run -d -e domain=dev.localhost.com --name mkcert --network mkcert -v mkcert-data:/root/.local/share/mkcert vishnunair/docker-mkcert
+docker run -d -e domain=dev.localhost.com --name mkcert -v mkcert-data:/root/.local/share/mkcert vishnunair/docker-mkcert
 
 ```
 
@@ -34,21 +25,23 @@ docker run -d -e domain=dev.localhost.com --name mkcert --network mkcert -v mkce
 
 ```
 
-docker run -d -e domain=api.staging.com,dev.localhost.com --name mkcert --network mkcert -v mkcert-data:/root/.local/share/mkcert vishnunair/docker-mkcert
+docker run -d -e domain=api.staging.com,dev.localhost.com,stg.localhost.com --name mkcert -v mkcert-data:/root/.local/share/mkcert vishnunair/docker-mkcert
 
 ```
 
 #### Connecting mkcert container with your local development environment.
 
-Once you run the mkcert up & running, connect your development environment to the mkcert network and share the volume you create & mount it to /tmp because in dev.go file you need to specify where to look for the ssl certs.
+Once you run the mkcert up & running, connect your development environment to the shared volume you create & mount it to the location where you specify your ssl files.  
 
 *For example: I am using a Dockerfile.dev to run a simple http server in go*
+
+*I am mounting /tmp directory to the shared volume becuase in dev.go file, I specify where to look for the ssl certs.*
 
 ```
 
 docker build -f Dockerfile.dev -t=vishnunair/docker-mkcert-dev .
 
-docker run -d -p 443:443 --name mkcert-dev  --network mkcert -v mkcert-data:/tmp -it vishnunair/docker-mkcert-dev
+docker run -d -p 443:443 --name mkcert-dev -v mkcert-data:/tmp -it vishnunair/docker-mkcert-dev
 
 ```
 
