@@ -31,11 +31,11 @@ docker run -d -e domain=api.staging.com,dev.localhost.com,stg.localhost.com --na
 
 #### Connecting mkcert container with your local development environment.
 
-Once you run the mkcert up & running, connect your development environment to the shared volume you create & mount it to the location where you specify your ssl files.  
+Once the mkcert is up & running, connect your development environment to the shared volume you create & mount it to the location where you specify your ssl files.  
 
 *For example: I am using a Dockerfile.dev to run a simple http server in go*
 
-*I am mounting /tmp directory to the shared volume becuase in dev.go file, I specify where to look for the ssl certs.*
+*I am mounting /tmp directory to the shared volume because in dev.go file, I specify where to look for the ssl certs.*
 
 ```
 
